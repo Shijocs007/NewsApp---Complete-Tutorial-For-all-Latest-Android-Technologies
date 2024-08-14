@@ -4,6 +4,10 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.newsappmvi.repository.DataStoreRepository
+import com.example.newsappmvi.repositoryimpl.DataStoreRepoImpl
+import com.example.newsappmvi.usecases.FetchOnBoardingStatus
+import com.example.newsappmvi.usecases.SaveOnboardingStatusUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +28,6 @@ object DataStoreModule {
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return context.dataStore
     }
+
+
 }

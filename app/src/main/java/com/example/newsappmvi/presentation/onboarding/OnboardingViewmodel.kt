@@ -4,14 +4,19 @@ import android.widget.Button
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.newsappmvi.R
+import com.example.newsappmvi.usecases.SaveOnboardingStatusUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class OnboardingViewmodel @Inject constructor()  : ViewModel() {
+class OnboardingViewmodel @Inject constructor(
+    private val saveBooleanUseCase: SaveOnboardingStatusUseCase,
+)  : ViewModel() {
 
 
     private val _onboardingState = MutableStateFlow(
@@ -31,6 +36,9 @@ class OnboardingViewmodel @Inject constructor()  : ViewModel() {
                     page = pages[event.selectedPage],
                     button = getButtonTexts(event.selectedPage)
                 )
+            }
+            OnBoardingEvent.SaveOnboardingStatus -> {
+                viewModelScope.launch { saveBooleanUseCase(true) }
             }
         }
     }
@@ -58,6 +66,8 @@ sealed class OnBoardingEvent {
         val selectedPage : Int
     ): OnBoardingEvent()
 
+    data object SaveOnboardingStatus : OnBoardingEvent()
+
 }
 
     sealed class OnBoardingState {
@@ -66,6 +76,8 @@ sealed class OnBoardingEvent {
             val page: Page,
             val button: List<String>
         ) : OnBoardingState()
+
+        data object NavigateToHome : OnBoardingState()
 
     }
 

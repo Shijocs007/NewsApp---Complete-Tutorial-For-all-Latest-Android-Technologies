@@ -53,18 +53,17 @@ fun OnBoardingScreen(
                 }
             },
             onNextClick = {
-                scope.launch {
-                    pagerState.animateScrollToPage(pagerState.currentPage +1)
+                if(pagerState.currentPage == 2) {
+                    onEvent(OnBoardingEvent.SaveOnboardingStatus)
+                } else {
+                    scope.launch {
+                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                    }
                 }
+
             }
 
         )
     }
 }
 
-
-@Preview
-@Composable
-private fun OnBoardingScreenPreview() {
-  //  OnBoardingScreen()
-}

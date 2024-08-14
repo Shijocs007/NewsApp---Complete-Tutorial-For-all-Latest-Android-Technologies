@@ -5,8 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.newsappmvi.navigation.NavGraph
 import com.example.newsappmvi.navigation.Route
 import com.example.newsappmvi.presentation.onboarding.OnBoardingEvent
@@ -33,7 +37,13 @@ class MainActivity : ComponentActivity() {
         }
         enableEdgeToEdge()
         setContent {
-            NavGraph(startDestination = Route.OnBoardingScreen)
+
+            Box(modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
+                .fillMaxSize()) {
+                val state = viewModel.startDestination.collectAsStateWithLifecycle()
+                NavGraph(startDestination = state.value)
+            }
             }
         }
 }
