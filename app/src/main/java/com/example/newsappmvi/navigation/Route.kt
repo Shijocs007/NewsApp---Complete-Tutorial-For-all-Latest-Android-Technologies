@@ -11,4 +11,7 @@ sealed class Route {
 
     @Serializable
     data object HomeScreen : Route()
+
+    @Serializable
+    data object LoginScreen : Route()
 }

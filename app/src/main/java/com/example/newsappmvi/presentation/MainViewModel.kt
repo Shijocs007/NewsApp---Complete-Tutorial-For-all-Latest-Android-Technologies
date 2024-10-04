@@ -31,12 +31,12 @@ class MainViewModel @Inject constructor(
 
     private fun checkOnboardingstatus() {
         fetchOnBoardingStatus().onEach { shouldStartFromHomeScreen ->
+            delay(300)
             if(shouldStartFromHomeScreen){
-                _startDestination.value = Route.HomeScreen
+                _startDestination.value = Route.LoginScreen
             }else{
                 _startDestination.value = Route.OnBoardingScreen
             }
-            delay(300) //Without this delay, the onBoarding screen will show for a momentum.
             _showSplashScreen.value = false
         }.launchIn(viewModelScope)
     }

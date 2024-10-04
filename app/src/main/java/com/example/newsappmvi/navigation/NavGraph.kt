@@ -1,5 +1,6 @@
 package com.example.newsappmvi.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -12,6 +13,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.newsappmvi.presentation.MainViewModel
+import com.example.newsappmvi.presentation.auth.LoginScreen
+import com.example.newsappmvi.presentation.auth.LoginViewModel
 import com.example.newsappmvi.presentation.home.HomeScreen
 import com.example.newsappmvi.presentation.onboarding.OnBoardingEvent
 import com.example.newsappmvi.presentation.onboarding.OnBoardingScreen
@@ -26,6 +29,7 @@ fun NavGraph(startDestination : Route) {
 
 
     NavHost(navController = navController, startDestination = startDestination) {
+        Log.d("SHIJO", "NavGraph:  $startDestination")
         composable<Route.OnBoardingScreen> {
             val onboardingViewmodel : OnboardingViewmodel = hiltViewModel()
             OnBoardingScreen(
@@ -35,8 +39,18 @@ fun NavGraph(startDestination : Route) {
                 }
             )
         }
+        composable<Route.LoginScreen> {
+            val loginViewModel : LoginViewModel = hiltViewModel()
+            LoginScreen(
+                state = loginViewModel.loginState.collectAsState().value,
+                onEvent = { event ->
+                    loginViewModel.onEvent(event)
+                }
+            )
+        }
         composable<Route.HomeScreen> {
             HomeScreen()
         }
+
     }
 }

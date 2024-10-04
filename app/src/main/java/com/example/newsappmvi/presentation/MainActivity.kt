@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -37,12 +38,13 @@ class MainActivity : ComponentActivity() {
         }
         enableEdgeToEdge()
         setContent {
-
-            Box(modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .fillMaxSize()) {
-                val state = viewModel.startDestination.collectAsStateWithLifecycle()
-                NavGraph(startDestination = state.value)
+            NewsAppMVITheme{
+                Box(modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background)
+                    .fillMaxSize()) {
+                    val state = viewModel.startDestination.collectAsStateWithLifecycle()
+                    NavGraph(startDestination = state.value)
+                }
             }
             }
         }
