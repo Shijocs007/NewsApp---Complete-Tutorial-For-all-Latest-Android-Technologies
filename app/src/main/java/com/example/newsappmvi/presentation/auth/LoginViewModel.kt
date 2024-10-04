@@ -30,6 +30,12 @@ class LoginViewModel @Inject constructor() : ViewModel() {
                     }
                 }
             }
+
+            LoginEvent.TypingEvent -> {
+                viewModelScope.launch {
+                    _loginState.emit(LoginState.LoginInitialState)
+                }
+            }
         }
     }
 }
@@ -45,4 +51,5 @@ sealed class LoginState {
 
 sealed class LoginEvent{
     data class PhoneNumberEvent(val phoneNumber : String) : LoginEvent()
+    data object TypingEvent : LoginEvent()
 }

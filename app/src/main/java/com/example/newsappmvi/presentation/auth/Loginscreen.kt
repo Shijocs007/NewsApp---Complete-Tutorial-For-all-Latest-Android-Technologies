@@ -71,7 +71,10 @@ fun LoginScreen(
             OutlinedTextField(
                 value = phoneNumber,
                 onValueChange = { input ->
-                  phoneNumber = input
+                    if(input.length <= 10){
+                        phoneNumber = input
+                    }
+                    onEvent(LoginEvent.TypingEvent)
                 },
                 label = { Text("Phone Number") },
                 leadingIcon = { Icon(Icons.Default.Phone, contentDescription = null) },
@@ -90,7 +93,7 @@ fun LoginScreen(
                 },
                 trailingIcon = {
                     if (state is LoginState.LoginErrorState)
-                        Icon(Icons.Filled.Warning,"error", tint = MaterialTheme.colorScheme.error)
+                        Icon(Icons.Filled.Warning, "error", tint = MaterialTheme.colorScheme.error)
                 },
             )
         }
